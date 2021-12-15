@@ -1,18 +1,13 @@
-using System;
+using System.Linq;
 
 public static class RotationalCipher
 {
     public static string Rotate(string text, int shiftKey)
     {
-        var chars = new char[text.Length];
-        
-        for (var i = 0; i < text.Length; i++)
-            chars[i] = GetRotatedChar(text[i], shiftKey);
-
-        return new string(chars);
+        return new string(text.Select(x => GetRotatedLetter(x, shiftKey)).ToArray());
     }
 
-    private static char GetRotatedChar(char c, int charShift)
+    private static char GetRotatedLetter(char c, int charShift)
     {
         if (!char.IsLetter(c))
             return c;
