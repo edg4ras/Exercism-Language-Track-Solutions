@@ -14,39 +14,21 @@ public static class RotationalCipher
 
     private static char GetRotatedChar(char c, int charShift)
     {
-        if (!TryGetFirstLetterCharNum(c, out var firstCharNum))
+        if (!char.IsLetter(c))
             return c;
 
-        int adjustedCharShift = charShift;
-
+        var firstCharNum = char.IsLower(c) ? 'a' : 'A';
         var currentCharNum = (int) c;
         var relativeCharPosition = (int) (currentCharNum - firstCharNum);
         var relativeCharShift = relativeCharPosition + charShift;
-
         var charsInRotation = 26;
 
         if (relativeCharShift >= charsInRotation)
         {
             var numberOfRotations = (relativeCharShift / charsInRotation);
-            adjustedCharShift = charShift - numberOfRotations * charsInRotation;
+            var rotationAdjustedCharShift = charShift - numberOfRotations * charsInRotation;
+            return (char) (c + rotationAdjustedCharShift);
         }
-
-        return (char) (c + adjustedCharShift);
-    }
-
-    private static bool TryGetFirstLetterCharNum(char c, out int firstCharNum)
-    {
-        switch (c)
-        {
-            case >= 'a' and <= 'z':
-                firstCharNum = 'a';
-                return true;
-            case >= 'A' and <= 'Z':
-                firstCharNum = 'A';
-                return true;
-            default:
-                firstCharNum = default;
-                return false;
-        }
+        return (char) (c + charShift);
     }
 }
